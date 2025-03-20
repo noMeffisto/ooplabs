@@ -29,11 +29,13 @@ x, y, radius (integers).
 (x, y) - coordinates of the top-left corner of the bounding box containing the circle.
 radius - radius of the circle (defines width and height as 2 * radius).
 Drawn using the symbol @, filled inside the circular boundary.
+
 For a Rectangle:
 x, y, width, height (integers).
 (x, y) - coordinates of the top-left corner.
 width, height - dimensions of the rectangle.
 Drawn using the symbol #, filled completely.
+
 For a Triangle:
 x, y, side_a, side_b, side_c (integers).
 (x, y) - coordinates of the top vertex (apex) of the triangle.
