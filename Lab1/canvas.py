@@ -55,14 +55,22 @@ class Canvas:
     def save_to_file(self, filename="canvas.json"):
         data = []
         for shape in self.shapes:
-            data.append({
+            shape_data = {
                 "type": shape.__class__.__name__,
                 "x": shape.x,
                 "y": shape.y,
-                "width": shape.width,
-                "height": shape.height,
                 "symbol": shape.symbol
-            })
+            }
+            if isinstance(shape, Circle):
+                shape_data["radius"] = shape.radius
+            elif isinstance(shape, Rectangle):
+                shape_data["width"] = shape.width
+                shape_data["height"] = shape.height
+            elif isinstance(shape, Triangle):
+                shape_data["side_a"] = shape.side_a
+                shape_data["side_b"] = shape.side_b
+                shape_data["side_c"] = shape.side_c
+            data.append(shape_data)
         with open(filename, "w") as f:
             json.dump(data, f)
         print("Canvas saved successfully!")
@@ -76,14 +84,14 @@ class Canvas:
         self.shapes.clear()
         for item in data:
             if item["type"] == "Circle":
-                shape = Circle(item["x"], item["y"], item["width"] // 2)
+                shape = Circle(item["x"], item["y"], item["radius"])
             elif item["type"] == "Rectangle":
                 shape = Rectangle(item["x"], item["y"], item["width"], item["height"])
             elif item["type"] == "Triangle":
-                shape = Triangle(item["x"], item["y"], item["height"])
+                shape = Triangle(item["x"], item["y"], item["side_a"], item["side_b"], item["side_c"])
             else:
                 continue
-            self.shapes.append(shape)
+        self.shapes.append(shape)
         print("Canvas loaded successfully!")
 
     def show(self):

@@ -54,8 +54,13 @@ class PaintApp:
             elif choice == "3":
                 x = self.input_int("X", 1, 45)
                 y = self.input_int("Y", 1, 25)
-                h = self.input_int("Height", 1, 10)
-                self.canvas.add_shape(Triangle(x, y, h))
+                side_a = self.input_int("Base length (side_a)", 1, 20)
+                side_b = self.input_int("Left side (side_b)", 1, 20)
+                side_c = self.input_int("Right side (side_c)", 1, 20)
+                if (side_a + side_b <= side_c) or (side_b + side_c <= side_a) or (side_a + side_c <= side_b):
+                    print("These sides cannot form a triangle!")
+                else:
+                    self.canvas.add_shape(Triangle(x, y, side_a, side_b, side_c))
             elif choice == "4":
                 shape = self.input_shape("Move which shape?")
                 if shape:
@@ -76,6 +81,8 @@ class PaintApp:
                 self.canvas.load_from_file()
             elif choice == "0":
                 break
+            else:
+                print("Invalid choice! Please select a number from 0 to 9.")
 
 if __name__ == "__main__":
     app = PaintApp()
