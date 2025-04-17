@@ -76,23 +76,23 @@ class Canvas:
         print("Canvas saved successfully!")
 
     def load_from_file(self, filename="canvas.json"):
-        if not os.path.exists(filename):
-            print("No saved canvas found.")
-            return
-        with open(filename, "r") as f:
-            data = json.load(f)
-        self.shapes.clear()
-        for item in data:
-            if item["type"] == "Circle":
-                shape = Circle(item["x"], item["y"], item["radius"])
-            elif item["type"] == "Rectangle":
-                shape = Rectangle(item["x"], item["y"], item["width"], item["height"])
-            elif item["type"] == "Triangle":
-                shape = Triangle(item["x"], item["y"], item["side_a"], item["side_b"], item["side_c"])
-            else:
-                continue
-        self.shapes.append(shape)
-        print("Canvas loaded successfully!")
+     if not os.path.exists(filename):
+        print("No saved canvas found.")
+        return
+     with open(filename, "r") as f:
+        data = json.load(f)
+        self.shapes.clear()  # Очищаем текущие фигуры
+     for item in data:
+        if item["type"] == "Circle":
+            shape = Circle(item["x"], item["y"], item["radius"])
+        elif item["type"] == "Rectangle":
+            shape = Rectangle(item["x"], item["y"], item["width"], item["height"])
+        elif item["type"] == "Triangle":
+            shape = Triangle(item["x"], item["y"], item["side_a"], item["side_b"], item["side_c"])
+        else:
+            continue
+        self.shapes.append(shape)  # Добавляем каждую фигуру в список
+    print("Canvas loaded successfully!")
 
     def show(self):
         canvas = [[" " for _ in range(self.width)] for _ in range(self.height)]

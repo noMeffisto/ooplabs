@@ -41,19 +41,19 @@ class PaintApp:
             choice = input("Choice: ")
 
             if choice == "1":
-                x = self.input_int("X", 1, 45)
-                y = self.input_int("Y", 1, 25)
+                x = self.input_int("X", 1, 49)
+                y = self.input_int("Y", 1, 29)
                 radius = self.input_int("Radius", 1, 10)
                 self.canvas.add_shape(Circle(x, y, radius))
             elif choice == "2":
-                x = self.input_int("X", 1, 45)
-                y = self.input_int("Y", 1, 25)
+                x = self.input_int("X", 1, 49)
+                y = self.input_int("Y", 1, 29)
                 w = self.input_int("Width", 1, 20)
                 h = self.input_int("Height", 1, 10)
                 self.canvas.add_shape(Rectangle(x, y, w, h))
             elif choice == "3":
-                x = self.input_int("X", 1, 45)
-                y = self.input_int("Y", 1, 25)
+                x = self.input_int("X", 1, 49)
+                y = self.input_int("Y", 1, 29)
                 side_a = self.input_int("Base length (side_a)", 1, 20)
                 side_b = self.input_int("Left side (side_b)", 1, 20)
                 side_c = self.input_int("Right side (side_c)", 1, 20)

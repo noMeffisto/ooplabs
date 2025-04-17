@@ -8,7 +8,6 @@ class Shape:
 
     def draw(self, canvas):
         pass
-
     def move(self, x, y):
         self.x = x
         self.y = y
@@ -29,7 +28,7 @@ class Circle(Shape):
 class Rectangle(Shape):
     def __init__(self, x, y, width, height):
         super().__init__(x, y, width, height, symbol="#")
-
+        
     def draw(self, canvas):
         for i in range(self.y, self.y + self.height):
             for j in range(self.x, self.x + self.width):
@@ -38,24 +37,22 @@ class Rectangle(Shape):
 
 class Triangle(Shape):
     def __init__(self, x, y, side_a, side_b, side_c):
-        self.side_a = side_a  # основание
-        self.side_b = side_b  # левая сторона
-        self.side_c = side_c  # правая сторона
-        # Полупериметр и площадь для вычисления высоты
+        self.side_a = side_a  
+        self.side_b = side_b  
+        self.side_c = side_c  
+
         s = (side_a + side_b + side_c) / 2
         area = (s * (s - side_a) * (s - side_b) * (s - side_c)) ** 0.5
-        height = int(2 * area / side_a)  # высота треугольника
-        width = side_a  # ширина равна основанию
+        height = int(2 * area / side_a)  
+        width = side_a  
         super().__init__(x, y, width, height, symbol="*")
-        # Переворачиваем координаты: вершина сверху, основание снизу
         self.vertices = [
-            (x + side_a // 2, y),         # верхняя вершина (смещена к центру основания)
-            (x, y + height),              # левая вершина основания
-            (x + side_a, y + height)      # правая вершина основания
+            (x + side_a // 2, y),        
+            (x, y + height),              
+            (x + side_a, y + height)     
         ]
 
     def _draw_line(self, canvas, x0, y0, x1, y1):
-        """Алгоритм Брезенхема для рисования линии"""
         dx = abs(x1 - x0)
         dy = abs(y1 - y0)
         sx = 1 if x0 < x1 else -1
@@ -77,10 +74,7 @@ class Triangle(Shape):
         return points
 
     def draw(self, canvas):
-        """Рисуем треугольник с контуром и заливкой"""
         v0, v1, v2 = self.vertices
-
-        # 1. Рисуем контур (три линии)
         edges = []
         edges.extend(self._draw_line(canvas, v0[0], v0[1], v1[0], v1[1]))  # верх -> левая
         edges.extend(self._draw_line(canvas, v0[0], v0[1], v2[0], v2[1]))  # верх -> правая
@@ -89,8 +83,6 @@ class Triangle(Shape):
         for x, y in edges:
             if 0 <= y < len(canvas) and 0 <= x < len(canvas[y]):
                 canvas[y][x] = self.symbol
-
-        # 2. Заливка внутри треугольника
         min_y = min(v0[1], v1[1], v2[1])
         max_y = max(v0[1], v1[1], v2[1])
         min_x = min(v0[0], v1[0], v2[0])
@@ -103,7 +95,6 @@ class Triangle(Shape):
                         canvas[y][x] = self.symbol
 
     def _is_point_inside(self, x, y, v0, v1, v2):
-        """Проверка, находится ли точка внутри треугольника (барицентрические координаты)"""
         def sign(p1, p2, p3):
             return (p1[0] - p3[0]) * (p2[1] - p3[1]) - (p2[0] - p3[0]) * (p1[1] - p3[1])
 
@@ -117,7 +108,6 @@ class Triangle(Shape):
         return not (has_neg and has_pos)
 
     def move(self, x, y):
-        """Перемещаем треугольник, обновляя координаты вершин"""
         dx = x - self.x
         dy = y - self.y
         self.x = x
